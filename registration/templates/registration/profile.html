@@ -1,0 +1,30 @@
+
+{% extends 'base.html' %}
+
+{% block title %}
+<title>Profile</title>
+{% endblock %}
+
+{% block content %}
+
+<a href={% url 'edit-profile' %}>Edit</a>
+<h1>Profile</h1>
+
+<label>Full Name:</label> {{request.user.full_name}}
+<hr>
+<label>Nick Name:</label> {{request.user.username}}
+<hr>
+<label>Role:</label> {% if request.user.is_superuser %} 
+                            You Are Admin.
+                        {% elif request.user.is_moderator %}
+                        You are Moderator
+                        {% else %}
+                        You are ordinary User
+                        {% endif %}
+
+<hr>
+<label>Your Posts count:          </label><span>    {{user.newpost_set.all.count}}</span>
+
+
+
+{% endblock %}

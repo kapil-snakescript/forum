@@ -1,0 +1,111 @@
+
+{% extends 'base.html' %}
+
+{% block title %}
+<title>Users List</title>
+{% endblock %}
+
+{% block content %}
+{{form.errors}}
+
+<div class="row">
+  <div class="col-md-12 col-sm-12 col-xs-12 hdng-section">
+    <h2>List of Users</h2>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12 col-sm-12 col-xs-12 list-user-section">
+    <div class="table-responsive">
+     <table class="table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Name</th>
+          <th>Posts</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for user in paginated_data.object_list %}
+        <tr>
+          <td>{{user.id}}</td>
+          <td style="text-decoration: none;"><a href={% url 'edit-user' user.id %}>{{user.full_name}}</a></td>
+          <td>{{user.newpost_set.all.count}}</td>
+        </tr>
+        {% endfor %}
+       
+      </tbody>
+    </table>
+  </div>
+  </div>
+</div>
+<ul class="pagination justify-content-center list-users-pagination">
+        <li class="page-item"><a class="page-link" href="?page={{ paginator.previous_page_number }}"><i class="fa fa-angle-double-left" aria-hidden="true"></i>Previous</a></li>
+
+
+        {% for paginator in paginator %}
+        <li class="page-item"><a class="page-link" href="?page={{paginator.number}}">{{paginator.number}}</a></li>
+        {%endfor%}
+
+
+        {% if has_next == True %}
+        <li class="page-item"><a class="page-link" href="?page={{ next_page }}">Next<i class="fa fa-angle-double-right" aria-hidden="true"></i></a></li>
+        {%endif%}
+</ul>
+
+
+<!-- <div class="row sections-scroll">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Posts</th>
+            </tr>
+        </thead>
+     <tbody>
+         {% for user in users %}
+       <tr>
+           <td>
+               {{forloop.counter}}
+           </td>
+         <td>
+           <div class="row">
+             
+              <div class="col-md-9">
+            
+               <a style="text-decoration: none; color: black;" href={% url 'edit-user' user.id %}>{{user.full_name}}</a>
+              
+             </div>
+             
+           </div>
+         </td>
+         <td>
+           <p class="nmbr-vlue">{{user.newpost_set.all.count}}</p>
+         </td>
+        
+       </tr>
+       {% endfor %}
+      
+     </tbody>
+   </table>
+ </div>
+ <div class="row">
+   <div class="col-md-12 pagintion-cntn">
+      <ul class="pagination justify-content-end end-pagination">
+         <li class="page-item"><a class="page-link" href="javascript:void(0);"><i class="fa fa-angle-double-left" aria-hidden="true"></i>Previous</a></li>
+         <li class="page-item"><a class="page-link" href="javascript:void(0);">1</a></li>
+         <li class="page-item"><a class="page-link" href="javascript:void(0);">2</a></li>
+          <li class="page-item"><a class="page-link" href="javascript:void(0);">3</a></li>
+         <li class="page-item"><a class="page-link" href="javascript:void(0);">4</a></li>
+          <li class="page-item"><a class="page-link" href="javascript:void(0);">5</a></li>
+         <li class="page-item"><a class="page-link" href="javascript:void(0);">6</a></li>
+          <li class="page-item"><a class="page-link" href="javascript:void(0);">7</a></li>
+         <li class="page-item"><a class="page-link" href="javascript:void(0);">8</a></li>
+          <li class="page-item"><a class="page-link" href="javascript:void(0);">9</a></li>
+         <li class="page-item"><a class="page-link" href="javascript:void(0);">10</a></li>
+         <li class="page-item"><a class="page-link" href="javascript:void(0);">Next<i class="fa fa-angle-double-right" aria-hidden="true"></i></a></li>
+       </ul>
+   </div>
+ </div> -->
+
+{% endblock %}

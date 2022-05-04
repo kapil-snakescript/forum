@@ -1,0 +1,67 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    {% block title %}
+
+    {% endblock %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+        <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/registeration.css' %}">
+      </head>
+    <body>
+        <nav class="navbar navbar-expand-sm nav-bg-section">
+            <div class="container">
+              <ul class="navbar-nav">
+                <li class="nav-item">
+                  <a class="nav-link" href={% url 'section-list' %}>Posts</a>
+                </li>
+                {% if request.user.is_superuser or request.user.is_moderator %}
+                <li class="nav-item">
+                  <a class="nav-link" href={% url 'users-listing' %}>Users</a>
+                </li>
+                {% endif %}
+                {% if request.user.is_authenticated %}
+                <li class="nav-item">
+                  <a class="nav-link" href={% url 'my-profile' %}>My Profile</a>
+                </li>
+                {% endif %}
+                {% if request.user.is_authenticated %}
+                <li class="nav-item">
+                  <a class="nav-link" href={% url 'logout-user' %}>Logout</a>
+                </li>
+                {% else %}
+                <li class="nav-item">
+                  <a class="nav-link" href={% url 'login-user' %}>Login</a>
+                </li>
+                {% endif %}
+              </ul>
+              {% if request.user.is_authenticated %}
+              <div class="administrator-stcn">
+                <p>Hi {{request.user.full_name}}</p>
+              </div>
+              {% else %}
+              <div class="administrator-stcn">
+                <p>Hi Guest</p>
+              </div>
+              {% endif %}
+            </div>
+          </nav>
+          <div class="container">
+            {% block content %}
+            
+           
+            
+            {% endblock %}
+        </div>
+        
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+    </body>
+</html>

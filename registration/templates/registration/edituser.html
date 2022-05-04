@@ -1,0 +1,53 @@
+
+{% extends 'base.html' %}
+
+{% block title %}
+<title>Edit User</title>
+{% endblock %}
+
+{% block content %}
+
+
+<form method="post">
+    {% csrf_token %}
+    <h4>Edit User Profile:  {{user.fullname}}</h4>
+
+<label>Full Name:</label> {{user.full_name}}
+<hr>
+<label>Nick Name:</label> {{user.username}}
+<hr>
+{% if request.user.is_superuser %}
+<label>Change Role:</label>
+ <select name="role">
+    <option value="1" {% if not user.is_superuser or user.is_moderator %} selected {% endif %}>Ordinary</option>
+    <option value="2" {% if  user.is_moderator %} selected {% endif %}>Moderator</option>
+    <option value="3" {% if user.is_superuser %} selected {% endif %}>Admin</option>
+</select>
+<hr>
+<label for="ban_permanent">Permanent Ban</label>
+<input type="checkbox" id="ban_permanent" 
+            name="ban_permanent" {% if user.is_baned_permanent %} checked {% endif %} >
+<hr>
+
+        {% if user.ban_till_date %}
+        <label>This user is banned till:  </label>
+                <span>{{user.ban_till_date}}</span>
+                <hr>
+            {% else %}
+                <label>How many day you want to ban this user? </label>
+                <input type="number" name="days" min=0 value=>
+                <hr>
+        {% endif %}
+
+{% endif %}
+
+
+<button type="submit">Edit User</button>
+
+
+<hr>
+</form>
+
+
+
+{% endblock %}

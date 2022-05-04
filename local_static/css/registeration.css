@@ -1,0 +1,82 @@
+.registration-section {
+    text-align: center;
+    }
+    .registration-section .form-group {
+     width: 80%;
+     margin: 0 auto;
+     margin-bottom: 12px;
+     }
+     .registration-section .form-group label {
+     padding-right: 50px;
+     width: 20%;
+     color: #000;
+     font-size: 17px;
+     }
+     .registration-section .form-group input{
+      width: 60%;
+      padding: 6px;
+      border-radius: 5px;
+      border: 1px solid #000; 
+     }
+     button.register-btn {
+     border: 1px solid #000;
+     padding: 3px 10px 4px 10px;
+     background: #fff;
+     border-radius: 9px;
+     font-size: 17px;
+     }
+    .account-section {
+     width: 100%;
+     float: right;
+      }
+    .account-section a {
+     width: 80%;
+     color: #1674e5;
+     font-size: 17px;
+     justify-content: end;
+    }
+    .account-section{
+    width: 100%;
+    display: flex;
+    margin: 0 auto;
+    margin-top: 15px;
+    }
+    .error-mesg {
+   margin-bottom: 20px;
+   }
+   .error-mesg span{
+   color: #e91f1f;
+   font-size: 17px; 
+   }
+   /*-----Start Login Page Css------*/
+   .login-btn .register-btn {
+    padding: 3px 31px 4px 31px;
+   }
+   /*-----End Login Page Css-----*/
+   @media only screen and (max-width: 992px) {
+   .registration-section .form-group{
+   width: 100%;  
+   }  
+   .registration-section .form-group label{
+   padding-right: 0px;
+   width: 30%;
+   text-align: left;  
+   }
+   .account-section a{
+   font-size: 14px;  
+   }
+   button.register-btn{
+   font-size: 14px;  
+   }
+   }
+   @media only screen and (max-width: 576px) {
+   .error-mesg span{
+   font-size: 14px;  
+   }
+   .registration-section .form-group label{
+   font-size: 15px; 
+   }
+   .account-section a{
+   width: 70%; 
+   }
+   }

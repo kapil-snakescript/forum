@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+
+   {% block title %}
+   <title>Sections</title>
+   {% endblock %}
+
+   {% block content %}
+
+   {% if messages %}
+       {% for msg in messages %}
+           {{msg}}
+       {% endfor %}
+   {% endif %}
+        <div class="row">
+            <div class="col-md-6 col-sm-6 col-xs-6 hdng-section">
+                <h4>{{section.title}}</h4>
+            </div>
+            <div class="col-md-6 col-sm-6 col-xs-6 my-auto tipic-name">
+                <p>{{section.topic}}</p>
+            </div>
+        </div>
+
+        <div class="row post-section">
+            <div class="col-md-9 screen-lst">
+                <p>{{section.description}}</p>
+            </div>
+            <div class="col-md-3">
+                <div class="nw-section-post">
+                    <p><a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fa fa-plus"
+                                aria-hidden="true"></i> New
+                            Post</a></p>
+                    <!-- Modal -->
+
+                    {% csrf_token %}
+                    <div class="modal fade section-tble-henk" id="exampleModal" tabindex="-1"
+                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <div class="row">
+                                        <div class="col-md-4 col-sm-4 popup-brdr lft-mbl-hynk">
+                                            <p>{{request.user}}</p>
+                                        </div>
+                                        <div class="col-md-8 col-sm-8 popup-brdr rygt-mbl-hynk">
+                                            <div class="row">
+                                                <div class="col-md-10 col-sm-10 inr-lft-mbl">
+                                                    <p>{% now 'DATE_FORMAT' %}</p>
+                                                </div>
+                                                <div class="col-md-2 col-sm-2 inr-rygt-mbl">
+                                                    <p>#1</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <form method="POST">
+                                    {% csrf_token %}
+                                    <div class="modal-body">
+                                        <div class="row">
+                                            <div class="col-md-12 col-sm-12 mdl-cntn">
+                                                <textarea name="post" required class="popup-txtarea"></textarea>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <input type="submit" class="btn btn-primary"></button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="table-responsive section-table-brdr">
+            {% for c in paginated_data.object_list %}
+            <table border="0" cellspacing="0" cellpadding="0" class="table">
+                <tbody>
+                    <tr>
+                        <td>By: {{c.creator}}</td>
+                        <td>{{c.created_on|date:'Y-m-d H:i'}}</td>
+                        <td>#{{c.id}}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="3">{{c.post}} </td>
+
+                    </tr>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+
+            </table>
+        </div>
+
+<ul class="pagination justify-content-center list-users-pagination">
+        <li class="page-item"><a class="page-link" href="?page={{ paginator.previous_page_number }}"><i class="fa fa-angle-double-left" aria-hidden="true"></i>Previous</a></li>
+
+
+        {% for paginator in paginator %}
+        <li class="page-item"><a class="page-link" href="?page={{paginator.number}}">{{paginator.number}}</a></li>
+        {%endfor%}
+
+
+        {% if has_next == True %}
+        <li class="page-item"><a class="page-link" href="?page={{ next_page }}">Next<i class="fa fa-angle-double-right" aria-hidden="true"></i></a></li>
+        {%endif%}
+</ul>
+        {% endblock %}

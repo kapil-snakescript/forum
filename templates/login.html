@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block title %}
+<title>Login</title>
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+    <div class="row">
+      <div class="col-md-12 col-sm-12 col-xs-12 hdng-section">
+        <h2>Login</h2>
+      </div>
+    </div>
+    <form method="post">
+        {% csrf_token %}
+      <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12 registration-section">
+          <div class="error-mesg">
+            {% if error %} <span class="text-danger">{{error}}</span> {%endif%}
+          </div>
+          <div class="form-group">
+              <label>User name</label>
+              <input type="text" name="username" value="">
+           </div>
+           <div class="form-group">
+              <label>Password</label>
+              <input type="Password" name="password" value="">
+           </div>  
+           <div class="form-group">
+              <div class="account-section login-btn">
+                <a href="{% url 'register-user' %}">Register</a>
+                <button class="register-btn">Login</button>
+               </div> 
+           </div>
+        </div>
+      </div>
+    </form>
+  </div>
+
+{% endblock %}
+
+
+
+
+

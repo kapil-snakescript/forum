@@ -1,0 +1,119 @@
+
+{% extends 'base.html' %}
+
+{% block title %}
+<title>Sections</title>
+{% endblock %}
+
+{% block content %}
+
+{% if messages %}
+    {% for msg in messages %}
+        {{msg}}
+    {% endfor %}
+{% endif %}
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12 hdng-section">
+      <h2>Sections</h2>
+    </div>
+  </div>
+  <form>
+  <div class="row form-search">
+      <div class="col-md-5 col-sm-5 col-xs-12">
+        <span class="search-icon">
+          <form method="GET">
+          <input type="search" name="query" value="{{request.GET.query}}" placeholder="Search">
+        </form>
+        
+        {% if not request.GET.query %}
+        <i class="fa fa-search" aria-hidden="true"></i>
+       
+        {%endif%}
+
+          
+         </span> 
+      </div>
+      <div class="col-md-4 col-sm-4 col-xs-12 seclt-bx my-auto" >
+          <form method="POST" id="select_dropdown">
+              {%csrf_token%}
+         <select name="topic_select" id="select_topic" onchange="submit_dropdown()">
+             <option value="" disabled selected>Select Topic to filter</option>
+             {% for topic in topic %}
+             <option value="{{topic}}" {% if request.POST.topic_select == topic %} selected {%endif%}>{{topic}}</option>
+             {%endfor%}
+          </select>
+          </form>
+      </div>
+      <div class="col-md-3 col-sm-3 col-xs-12 my-auto">
+          <div class="nw-section">
+            <p>
+                <a href={% url 'add-section' %} style="text-decoration: none; color: black;"
+                 class="{% if not request.user.is_superuser %}disabled{% endif %}"><i class="fa fa-plus" aria-hidden="true"></i> New Section</a></p>
+          </div>
+      </div>
+  </div>
+</form>
+
+<div class="row sections-scroll">
+   <table class="table main-tble">
+    <tbody>
+        {% for section in paginated_data.object_list %}
+        
+      <tr>
+        <td>
+          <div class="row tble-cntnt">
+           
+            <div class="col-md-1 my-auto">
+               <input type="checkbox" name="" value="">
+             </div>
+            
+                <div class="col-md-9 my-auto">
+              <h4> <a style="border: none;"  href={% url 'post_list' section.id %}>{{section.title}}</a></h4>
+              <p>{{section.description}}</p>
+            </div>
+
+            
+            
+            {% if request.user.is_superuser %}
+            <div class="col-md-2">
+              <a href="{% url 'edit-section' section.id %}">edit</a>
+              <span class="delet-btn"><a href={% url 'delete-section' section.id %} class="none-brdr"><i class="fa fa-trash" aria-hidden="true"></i></a></span>
+            </div>
+            {% endif %}
+          </div>
+        </td>
+        <td style="width: 80px;">
+          <p class="nmbr-vlue">{{section.newpost_set.all.count}}</p>
+        </td>
+        <td>
+          <div class="toget-txt">
+            <p class="lngr-txt">B17 and Merlin no longer toget...</p>
+            <p>by {{section.user.username}}</p>
+            <p class="merlin-date">{{section.created_on}}</p>
+          </div>
+        </td>
+      </tr>
+      {% endfor %}
+     
+    </tbody>
+  </table>
+</div>
+<ul class="pagination justify-content-center list-users-pagination">
+        <li class="page-item"><a class="page-link" href="?page={{ paginator.previous_page_number }}"><i class="fa fa-angle-double-left" aria-hidden="true"></i>Previous</a></li>
+
+
+        {% for paginator in paginator %}
+        <li class="page-item"><a class="page-link" href="?page={{paginator.number}}">{{paginator.number}}</a></li>
+        {%endfor%}
+
+
+        {% if has_next == True %}
+        <li class="page-item"><a class="page-link" href="?page={{ next_page }}">Next<i class="fa fa-angle-double-right" aria-hidden="true"></i></a></li>
+        {%endif%}
+</ul>
+<script>
+      function submit_dropdown(){
+        document.getElementById("select_dropdown").submit()
+        }
+</script>
+{% endblock %}

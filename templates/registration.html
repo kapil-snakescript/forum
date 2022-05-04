@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block title %}
+<title>Registration</title>
+{% endblock %}
+
+{% block content %}
+
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12 hdng-section">
+          <h2>Registration</h2>
+        </div>
+      </div>
+      <form class="mx-1 mx-md-4" method='post' action=''>
+        {% csrf_token %}
+        <div class="row">
+        
+          <div class="col-md-12 col-sm-12 col-xs-12 registration-section">
+            <div class="error-mesg">
+              {% if error %} <center><span class="text-danger">{{error}}</span></center> {%endif%}
+            </div>
+            <div class="form-group">
+                <label>Full name</label>
+                <input type="text" name="fullname" value="">
+             </div>
+             <div class="form-group">
+                <label>Username</label>
+                <input type="text" name="username" value="">
+             </div>
+             <div class="form-group">
+                <label>Password</label>
+                <input type="Password" name="password" value="">
+             </div>
+             <div class="form-group">
+                <div class="account-section">
+                  <a href="{% url 'login-user' %}">I have account</a>
+                  <button class="register-btn">Register me</button>
+                 </div> 
+             </div>
+          </div>
+  
+        </div>
+      </form>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>
+{%endblock%}
